@@ -1,0 +1,14 @@
+/* .container{
+
+} */
+
+.top-right{
+    flex-shrink: 0;
+    display: flex; 
+}
+
+.mid-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
