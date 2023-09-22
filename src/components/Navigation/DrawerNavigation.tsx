@@ -37,7 +37,7 @@ export function DrawerNavigation(): React.ReactElement {
   };
 
   return (
-    <Drawer variant="permanent" anchor="left">
+    <Drawer anchor="left">
       <Toolbar />
       <Divider />
       <List>
