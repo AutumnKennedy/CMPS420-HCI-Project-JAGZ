@@ -1,0 +1,27 @@
+.appContainer {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.appRoutesBoxContainer {
+  display: flex;
+
+  height: 100%;
+  width: 100%;
+}
+
+.appBarContainer {
+  position: fixed;
+  color: "blue";
+}
+
+.appBarToolbarContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconAndTitle {
+  display: flex;
+  gap: 8px;
+  color: white;
+}

@@ -23,7 +23,10 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.10",
-    "electron-updater": "^6.1.1"
+    "@types/react-router-dom": "^5.3.3",
+    "electron-router-dom": "^1.0.5",
+    "electron-updater": "^6.1.1",
+    "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1",

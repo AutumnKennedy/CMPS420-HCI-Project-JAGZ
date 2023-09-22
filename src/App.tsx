@@ -1,15 +1,18 @@
-import './App.css'
-import DrawerComponet from './components/Navigation/Drawer'
-import ImportData from './components/Pages/ImportData/ImportData'
+import { AppRoutes } from "./components/Navigation/AppRoutes";
+import { Appbar } from "./components/Navigation/Appbar";
+import "./app.css";
+import { Box } from "@mui/material";
 
-const App =()=> {
+function App() {
   return (
-    <div>
-      <DrawerComponet/>
-      <ImportData/>
-   
+    <div className="appContainer">
+      <Appbar />
+
+      <Box className="appRoutesBoxContainer">
+        <AppRoutes />
+      </Box>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
