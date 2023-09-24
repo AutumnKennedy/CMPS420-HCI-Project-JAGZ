@@ -7,11 +7,14 @@ export function ImportData() {
   const inputFile = useRef<HTMLInputElement | null>(null);
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
+    const importedFile = e.target.files?.[0];
 
-    if (selectedFile) {
-      if (selectedFile.name.endsWith(".edf")) {
-        console.log("Selected .edf file:", selectedFile);
+    if (importedFile) {
+      if (
+        importedFile.name.endsWith(".edf") ||
+        importedFile.name.endsWith(".fif")
+      ) {
+        console.log("Selected .edf or .fif file:", importedFile);
       } else {
         console.error("Invalid file type. Please select a .edf file.");
       }
