@@ -33,3 +33,7 @@ yarn.lock
 /playwright/.cache/
 python/backend/backend/__pycache__
 python/backend/db.sqlite3
+python/backend/api/__pycache__
+python/backend/api/migrations/__pycache__
+python/backend/api/migrations
+python/backend/backend/__pycache__
