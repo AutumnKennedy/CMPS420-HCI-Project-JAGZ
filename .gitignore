@@ -32,3 +32,4 @@ yarn.lock
 /playwright-report/
 /playwright/.cache/
 python/backend/backend/__pycache__
+python/backend/db.sqlite3
