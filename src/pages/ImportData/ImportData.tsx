@@ -1,20 +1,45 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import "./ImportData.css";
+import axios from "axios";
+import { Api } from '../../Config';
 
 export function ImportData() {
   const inputFile = useRef<HTMLInputElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
+    const file = e.target.files?.[0];
 
-    if (selectedFile) {
-      if (selectedFile.name.endsWith(".edf")) {
-        console.log("Selected .edf file:", selectedFile);
+    if (file) {
+      if (file.name.endsWith(".edf")) {
+        console.log("Selected .edf file:", file);
+        setSelectedFile(file);
       } else {
         console.error("Invalid file type. Please select a .edf file.");
       }
+    }
+  };
+
+  const handleApi = () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      axios.post("http://localhost:8000/api/upload-file/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    } else {
+      console.error("No file selected.");
     }
   };
 
@@ -22,12 +47,11 @@ export function ImportData() {
     if (inputFile.current) {
       inputFile.current.click();
     }
-  };
+  }
 
   return (
     <div className="importDataContainer">
       <h1>Import Data</h1>
-
       <div>
         <input
           type="file"
@@ -36,7 +60,6 @@ export function ImportData() {
           style={{ display: "none" }}
           onChange={onFileInputChange}
         />
-
         <Button
           variant="contained"
           endIcon={<AddIcon />}
@@ -44,6 +67,16 @@ export function ImportData() {
         >
           Import .edf File
         </Button>
+        <br />
+        <br />
+        <div className="centered-button">
+          <Button
+            variant="contained"
+            onClick={handleApi}
+          >
+            Submit
+          </Button>
+        </div>
       </div>
     </div>
   );
