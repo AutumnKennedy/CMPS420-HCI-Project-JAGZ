@@ -6,6 +6,8 @@ import { Box } from "@mui/material";
 function App() {
   return (
     <Box className="appContainer">
+      <Appbar />
+
       <AppRoutes />
     </Box>
   );

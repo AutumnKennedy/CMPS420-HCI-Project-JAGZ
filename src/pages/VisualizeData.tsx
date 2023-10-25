@@ -10,20 +10,39 @@ export function VisualizeData(): React.ReactElement {
   const [select, setSelect] = useState<string | null>(null);
 
   return (
-    <div className="container">
+    <div className="visualizeContainer">
       <div className="uploadAndSelect">
-        <ImportData file={file} setFile={setFile} />
-        {file?.name}
+        <div className="upload">
+          <ImportData file={file} setFile={setFile} />
+        </div>
 
-        <Autocomplete
-          value={select}
-          options={options}
-          onChange={(e, value) => setSelect(value)}
-          renderInput={(params) => <TextField {...params} />}
-        />
+        <div className="fileAndSelect">
+          <div>
+            Uploaded File:
+            {file && ` ${file.name}`}
+          </div>
+
+          <Autocomplete
+            fullWidth
+            value={select}
+            options={options}
+            onChange={(e, value) => setSelect(value)}
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Plot Options" />
+            )}
+          />
+        </div>
       </div>
 
-      <div>View</div>
+      <div className="viewContainer">
+        <div className="view">View 1</div>
+        <div className="view">View 2</div>
+      </div>
+
+      <div className="viewContainer">
+        <div className="view">View 3</div>
+        <div className="view">View 4</div>
+      </div>
     </div>
   );
 }

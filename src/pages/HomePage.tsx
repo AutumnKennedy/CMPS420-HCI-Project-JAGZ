@@ -1,7 +1,6 @@
 import { Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import "./homePage.css";
-import { ImportData } from "./ImportData/ImportData";
 import { VisualizeData } from "./VisualizeData";
 
 type Tab = {
@@ -10,9 +9,9 @@ type Tab = {
 };
 
 const tempTabs: Tab[] = [
-  { name: "Bob", element: <VisualizeData /> },
-  { name: "Sue", element: <VisualizeData /> },
-  { name: "Joe", element: <div /> },
+  { name: "Subject 1", element: <VisualizeData /> },
+  { name: "Subject 2", element: <VisualizeData /> },
+  { name: "Subject 3", element: <div /> },
 ];
 
 export function HomePage(): React.ReactElement {
@@ -30,7 +29,7 @@ export function HomePage(): React.ReactElement {
 
   return (
     <div className="container">
-      <div className="tabs">
+      <div>
         <Tabs value={value} onChange={handleChange} orientation="vertical">
           {tempTabs.map((tab, index) => (
             <Tab key={index} value={tab} label={tab.name} />

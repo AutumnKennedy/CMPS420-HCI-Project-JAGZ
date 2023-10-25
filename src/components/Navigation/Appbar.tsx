@@ -1,29 +1,16 @@
 import { routes } from "@/constants/routes";
-import {
-  DataUsage,
-  ImportContactsRounded,
-  Panorama,
-  SsidChart,
-} from "@mui/icons-material";
 import { AppBar, Box, MenuItem, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../app.css";
 
-const tabs = [
-  {
-    title: "Import",
-    icon: <ImportContactsRounded />,
-    route: routes.import,
-  },
-  { title: "Plot Data", icon: <SsidChart />, route: routes.plotData },
-  {
-    title: "Preprocess Data",
-    icon: <DataUsage />,
-    route: routes.preprocessData,
-  },
-  { title: "Visualize Data", icon: <Panorama />, route: routes.visualizeData },
-];
+interface NavTab {
+  icon: any;
+  title: string;
+  route: string;
+}
+
+const tabs: NavTab[] = [];
 
 export function Appbar(): React.ReactElement {
   const navigate = useNavigate();
@@ -33,7 +20,7 @@ export function Appbar(): React.ReactElement {
       <AppBar className="appBarContainer">
         <Toolbar className="appBarToolbarContainer">
           <MenuItem onClick={() => navigate(routes.home)}>
-            <Typography color={"white"}>EEG Data Plot Toolbox</Typography>
+            <Typography color={"white"}>BrainMapPro</Typography>
           </MenuItem>
 
           <Box display={"flex"}>

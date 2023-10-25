@@ -44,7 +44,12 @@ export function ImportData({ setFile }: ImportDataProps) {
   };
 
   return (
-    <div onDragOver={handleDrag} onDragLeave={handleDrag} onDrop={handleDrop}>
+    <div
+      className="container"
+      onDragOver={handleDrag}
+      onDragLeave={handleDrag}
+      onDrop={handleDrop}
+    >
       <input
         type="file"
         id="file"
@@ -56,15 +61,13 @@ export function ImportData({ setFile }: ImportDataProps) {
 
       <Button onClick={onButtonClick}>
         <div className="inner">
-          <div className="icon">
-            <UploadFile
-              style={{
-                display: "flex",
-                height: "100px",
-                width: "100px",
-              }}
-            />
-          </div>
+          <UploadFile
+            style={{
+              display: "flex",
+              height: "100px",
+              width: "100px",
+            }}
+          />
 
           <div className="text"> Import File </div>
           <div> Accepted File Types: {acceptedFiles} </div>
