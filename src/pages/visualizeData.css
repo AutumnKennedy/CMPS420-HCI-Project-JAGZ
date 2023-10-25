@@ -1,0 +1,14 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.uploadAndSelect {
+  display: flex;
+
+  width: 100%;
+}
+
+.select {
+  display: flex;
+}

@@ -1,9 +1,16 @@
 import React, { useRef } from "react";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import "./ImportData.css";
+import { UploadFile } from "@mui/icons-material";
 
-export function ImportData() {
+const acceptedFiles = ".edf, .fif";
+
+type ImportDataProps = {
+  file?: File | null;
+  setFile: (arg: File | undefined | null) => void;
+};
+
+export function ImportData({ setFile }: ImportDataProps) {
   const inputFile = useRef<HTMLInputElement | null>(null);
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,9 +21,7 @@ export function ImportData() {
         importedFile.name.endsWith(".edf") ||
         importedFile.name.endsWith(".fif")
       ) {
-        console.log("Selected .edf or .fif file:", importedFile);
-      } else {
-        console.error("Invalid file type. Please select a .edf file.");
+        setFile(importedFile);
       }
     }
   };
@@ -27,27 +32,44 @@ export function ImportData() {
     }
   };
 
+  const handleDrag = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    const droppedFile = Array.from(event.dataTransfer.files);
+    setFile(droppedFile[0]);
+  };
+
   return (
-    <div className="importDataContainer">
-      <h1>Import Data</h1>
+    <div onDragOver={handleDrag} onDragLeave={handleDrag} onDrop={handleDrop}>
+      <input
+        type="file"
+        id="file"
+        ref={inputFile}
+        style={{ display: "none" }}
+        onChange={onFileInputChange}
+        accept={acceptedFiles}
+      />
 
-      <div>
-        <input
-          type="file"
-          id="file"
-          ref={inputFile}
-          style={{ display: "none" }}
-          onChange={onFileInputChange}
-        />
+      <Button onClick={onButtonClick}>
+        <div className="inner">
+          <div className="icon">
+            <UploadFile
+              style={{
+                display: "flex",
+                height: "100px",
+                width: "100px",
+              }}
+            />
+          </div>
 
-        <Button
-          variant="contained"
-          endIcon={<AddIcon />}
-          onClick={onButtonClick}
-        >
-          Import .edf File
-        </Button>
-      </div>
+          <div className="text"> Import File </div>
+          <div> Accepted File Types: {acceptedFiles} </div>
+        </div>
+      </Button>
     </div>
   );
 }

@@ -10,8 +10,8 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path={routes.home} element={<HomePage />} />
-      <Route path={routes.import} element={<ImportData />} />
-      <Route path={routes.plotData} element={<PlotDataPage />} />
+      {/* <Route path={routes.import} element={<ImportData />} /> */}
+      {/* <Route path={routes.plotData} element={<PlotDataPage />} /> */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
