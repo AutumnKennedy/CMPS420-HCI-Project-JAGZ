@@ -1,9 +1,21 @@
-.importDataContainer {
+.container {
+  width: 300px;
+  height: 200px;
+}
+
+.inner {
   display: flex;
   flex-direction: column;
-  align-items: center;
 
+  height: 100%;
   width: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  font-weight: bold;
 }
 
 .centered-button {

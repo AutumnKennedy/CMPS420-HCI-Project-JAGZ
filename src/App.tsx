@@ -5,13 +5,11 @@ import { Box } from "@mui/material";
 
 function App() {
   return (
-    <div className="appContainer">
+    <Box className="appContainer">
       <Appbar />
 
-      <Box className="appRoutesBoxContainer">
-        <AppRoutes />
-      </Box>
-    </div>
+      <AppRoutes />
+    </Box>
   );
 }
 

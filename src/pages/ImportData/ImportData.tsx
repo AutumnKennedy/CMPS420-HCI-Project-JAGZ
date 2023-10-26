@@ -1,43 +1,49 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import "./ImportData.css";
+import { UploadFile } from "@mui/icons-material";
 import axios from "axios";
-import { Api } from '../../Config';
 
-export function ImportData() {
+const acceptedFiles = ".edf, .fif";
+
+type ImportDataProps = {
+  file?: File | null;
+  setFile: (arg: File | undefined | null) => void;
+};
+
+export function ImportData({ file, setFile }: ImportDataProps) {
   const inputFile = useRef<HTMLInputElement | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const importedFile = e.target.files?.[0];
 
-    if (file) {
-      if (file.name.endsWith(".edf")) {
-        console.log("Selected .edf file:", file);
-        setSelectedFile(file);
-      } else {
-        console.error("Invalid file type. Please select a .edf file.");
+    if (importedFile) {
+      if (
+        importedFile.name.endsWith(".edf") ||
+        importedFile.name.endsWith(".fif")
+      ) {
+        setFile(importedFile);
       }
     }
   };
 
   const handleApi = () => {
-    if (selectedFile) {
+    if (file) {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      formData.append("file", file);
 
-      axios.post("http://localhost:8000/api/upload-file/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      axios
+        .post("http://localhost:8000/api/upload-file/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       console.error("No file selected.");
     }
@@ -46,38 +52,58 @@ export function ImportData() {
   const onButtonClick = () => {
     if (inputFile.current) {
       inputFile.current.click();
+
+      if (inputFile.current.files) {
+        setFile(inputFile.current.files[0]);
+      }
     }
-  }
+  };
+
+  const handleDrag = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    const droppedFile = Array.from(event.dataTransfer.files);
+    setFile(droppedFile[0]);
+  };
+
+  useEffect(() => {
+    handleApi();
+  }, [file]);
 
   return (
-    <div className="importDataContainer">
-      <h1>Import Data</h1>
-      <div>
-        <input
-          type="file"
-          id="file"
-          ref={inputFile}
-          style={{ display: "none" }}
-          onChange={onFileInputChange}
-        />
-        <Button
-          variant="contained"
-          endIcon={<AddIcon />}
-          onClick={onButtonClick}
-        >
-          Import .edf File
-        </Button>
-        <br />
-        <br />
-        <div className="centered-button">
-          <Button
-            variant="contained"
-            onClick={handleApi}
-          >
-            Submit
-          </Button>
+    <div
+      className="container"
+      onDragOver={handleDrag}
+      onDragLeave={handleDrag}
+      onDrop={handleDrop}
+    >
+      <input
+        type="file"
+        id="file"
+        ref={inputFile}
+        style={{ display: "none" }}
+        onChange={onFileInputChange}
+        accept={acceptedFiles}
+      />
+
+      <Button onClick={onButtonClick}>
+        <div className="inner">
+          <UploadFile
+            style={{
+              display: "flex",
+              height: "100px",
+              width: "100px",
+            }}
+          />
+
+          <div className="text"> Import File </div>
+          <div> Accepted File Types: {acceptedFiles} </div>
         </div>
-      </div>
+      </Button>
     </div>
   );
 }

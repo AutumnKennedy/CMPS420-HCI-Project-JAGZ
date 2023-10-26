@@ -1,6 +1,9 @@
 .appContainer {
   display: grid;
   grid-template-rows: auto 1fr;
+
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .appRoutesBoxContainer {
