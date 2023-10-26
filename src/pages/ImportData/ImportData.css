@@ -17,3 +17,8 @@
 .text {
   font-weight: bold;
 }
+
+.centered-button {
+  display: flex;
+  justify-content: center;
+}

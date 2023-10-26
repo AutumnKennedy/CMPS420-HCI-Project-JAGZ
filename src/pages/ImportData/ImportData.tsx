@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import "./ImportData.css";
 import { UploadFile } from "@mui/icons-material";
@@ -12,6 +12,7 @@ type ImportDataProps = {
 
 export function ImportData({ setFile }: ImportDataProps) {
   const inputFile = useRef<HTMLInputElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const importedFile = e.target.files?.[0];
@@ -26,11 +27,32 @@ export function ImportData({ setFile }: ImportDataProps) {
     }
   };
 
+  const handleApi = () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      axios.post("http://localhost:8000/api/upload-file/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    } else {
+      console.error("No file selected.");
+    }
+  };
+
   const onButtonClick = () => {
     if (inputFile.current) {
       inputFile.current.click();
     }
-  };
+  }
 
   const handleDrag = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
