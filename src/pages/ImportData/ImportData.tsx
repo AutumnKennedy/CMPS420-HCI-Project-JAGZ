@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import "./ImportData.css";
 import { UploadFile } from "@mui/icons-material";
+import axios from "axios";
 
 const acceptedFiles = ".edf, .fif";
 
@@ -10,9 +11,8 @@ type ImportDataProps = {
   setFile: (arg: File | undefined | null) => void;
 };
 
-export function ImportData({ setFile }: ImportDataProps) {
+export function ImportData({ file, setFile }: ImportDataProps) {
   const inputFile = useRef<HTMLInputElement | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const importedFile = e.target.files?.[0];
@@ -28,21 +28,22 @@ export function ImportData({ setFile }: ImportDataProps) {
   };
 
   const handleApi = () => {
-    if (selectedFile) {
+    if (file) {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      formData.append("file", file);
 
-      axios.post("http://localhost:8000/api/upload-file/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      axios
+        .post("http://localhost:8000/api/upload-file/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       console.error("No file selected.");
     }
@@ -51,8 +52,12 @@ export function ImportData({ setFile }: ImportDataProps) {
   const onButtonClick = () => {
     if (inputFile.current) {
       inputFile.current.click();
+
+      if (inputFile.current.files) {
+        setFile(inputFile.current.files[0]);
+      }
     }
-  }
+  };
 
   const handleDrag = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -64,6 +69,10 @@ export function ImportData({ setFile }: ImportDataProps) {
     const droppedFile = Array.from(event.dataTransfer.files);
     setFile(droppedFile[0]);
   };
+
+  useEffect(() => {
+    handleApi();
+  }, [file]);
 
   return (
     <div
