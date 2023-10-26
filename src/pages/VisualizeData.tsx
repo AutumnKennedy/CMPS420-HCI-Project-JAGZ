@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ImportData } from "./ImportData/ImportData";
 import "./visualizeData.css";
 import { Autocomplete, TextField } from "@mui/material";
+import Plot from 'react-plotly.js';
+import { EdfPlot } from "./EdfPlot";
 
 const options = ["Graph", "Heat map", "Topograghy", "Etc"];
 
@@ -35,7 +37,22 @@ export function VisualizeData(): React.ReactElement {
       </div>
 
       <div className="viewContainer">
-        <div className="view">View 1</div>
+        <div className="view">
+          {/* <Plot
+            data={[
+              {
+                x: [1,2,3],
+                y: [2,6,3],
+                type: 'scatter',
+                mode: 'lines+markers',
+                marker: {color: 'red'},
+              },
+              {type: 'scatter', x: [1,2,3], y: [2,6,3]},
+            ]}
+            layout={ { width: 540, height: 280, title: 'A Fancy Plot'} } 
+            /> */}
+            <EdfPlot />
+        </div>
         <div className="view">View 2</div>
       </div>
 
