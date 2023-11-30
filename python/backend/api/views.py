@@ -2,8 +2,10 @@ from rest_framework import status
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import JsonResponse
 from .serializers import FileUploadSerializer
 import mne
+import os
 
 class FileUploadAPIView(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -24,19 +26,24 @@ class FileUploadAPIView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
-    def get(self, request):
-        file_path = 'media\\S001R01.edf'
+        
+    def get(self, request, filename):
+        file_path = f'media\\{filename}'
 
         try:
             raw = mne.io.read_raw_edf(file_path, preload=True)
             data, times = raw[:, :]     #Get all data and associated times
 
             x_values = times
-            y_values = data[0]      #change this slot as needed to select a new channel
+            y_values = data[3]      #change this slot as needed to select a new channel
 
             xy_data = [{"x": x, "y": y} for x, y in zip(x_values, y_values)]
 
             return Response({"data": xy_data}, status=status.HTTP_200_OK)
         except FileNotFoundError:
             return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
+
+def get_file_list(request):
+    folder_path = "media"
+    files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+    return JsonResponse({'files': files})

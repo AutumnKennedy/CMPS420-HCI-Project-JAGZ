@@ -2,31 +2,42 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 
-export function EdfPlot() {
-    const [data, setData] = useState([]);
+export type PlotData = {
+    x: number,
+    y: number;
+}
+
+interface EdfPlotProps {
+    selectedFile: string;
+}
+
+export const EdfPlot: React.FC<EdfPlotProps> = ({ selectedFile }) => {
+    const [points, setPoints] = useState<PlotData[]>([]);
+
+    const fetchPlotData = async () => {
+         const { data } = await axios.get<PlotData[]>(`http://localhost:8000/api/get-edf-file/${selectedFile}`);
+
+        setPoints(data.data);
+    };
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/get-edf-file/")
-            .then(response => {
-                setData(response.data.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
+        if (!selectedFile) return;
+
+        fetchPlotData();
+    }, [selectedFile]);
 
     return (
         <>
             <Plot 
                 data={[
                     {
-                        x: data.map((item) => item.x),
-                        y: data.map((item) => item.y),
+                        x: points.map((item) => item.x),
+                        y: points.map((item) => item.y),
                         type: 'scatter',
                         mode: 'lines+markers',
                     },
                 ]}
-                layout={{ width: 580, height: 300, title: 'EDF Data Plot' }}
+                layout={{ width: 1600, height: 750, title: 'EDF Data Plot' }}
             />
         </>
     );
