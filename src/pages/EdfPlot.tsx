@@ -37,7 +37,7 @@ export const EdfPlot: React.FC<EdfPlotProps> = ({ selectedFile }) => {
                         mode: 'lines+markers',
                     },
                 ]}
-                layout={{ width: 1600, height: 750, title: 'EDF Data Plot' }}
+                layout={{ width: 1600, height: 750, title: 'EDF Data Plot', xaxis: {title: 'Time (sec)'}, yaxis: {title: 'Value: (µ)'} }}
             />
         </>
     );
