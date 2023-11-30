@@ -27,12 +27,16 @@
     "axios": "^1.5.1",
     "electron-router-dom": "^1.0.5",
     "electron-updater": "^6.1.1",
+    "plotly.js": "^2.27.0",
+    "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1",
+    "@types/plotly.js": "^2.12.29",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "@types/react-plotly.js": "^2.6.2",
     "@vitejs/plugin-react": "^4.0.4",
     "electron": "^26.0.0",
     "electron-builder": "^24.6.3",
