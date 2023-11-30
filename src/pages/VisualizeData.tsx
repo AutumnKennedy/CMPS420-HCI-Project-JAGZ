@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ImportData } from "./ImportData/ImportData";
 import "./visualizeData.css";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 
 const options = ["Graph", "Heat map", "Topograghy", "Etc"];
 
@@ -31,6 +31,8 @@ export function VisualizeData(): React.ReactElement {
               <TextField {...params} placeholder="Plot Options" />
             )}
           />
+          <br/>
+          <Button variant="contained" >ICA Preprocessing</Button>
         </div>
       </div>
 
