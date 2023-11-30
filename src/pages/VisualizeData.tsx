@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { ImportData } from "./ImportData/ImportData";
 import "./visualizeData.css";
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
+import Plot from 'react-plotly.js';
+import { EdfPlot } from "./EdfPlot";
+import { EdfFileDropdown } from "@/components/EdfFileDropdown/EdfFileDropdown";
 
 const options = ["Graph", "Heat map", "Topograghy", "Etc"];
 
 export function VisualizeData(): React.ReactElement {
   const [file, setFile] = useState<File | undefined | null>(null);
-  const [select, setSelect] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<string>("");
+
+  const handleFileSelect = (file: string) => {
+    setSelectedFile(file);
+  }
 
   return (
     <div className="visualizeContainer">
@@ -22,7 +29,7 @@ export function VisualizeData(): React.ReactElement {
             {file && ` ${file.name}`}
           </div>
 
-          <Autocomplete
+          {/* <Autocomplete
             fullWidth
             value={select}
             options={options}
@@ -30,20 +37,15 @@ export function VisualizeData(): React.ReactElement {
             renderInput={(params) => (
               <TextField {...params} placeholder="Plot Options" />
             )}
-          />
-          <br/>
-          <Button variant="contained" >ICA Preprocessing</Button>
+          /> */}
+          <EdfFileDropdown selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
         </div>
       </div>
 
       <div className="viewContainer">
-        <div className="view">View 1</div>
-        <div className="view">View 2</div>
-      </div>
-
-      <div className="viewContainer">
-        <div className="view">View 3</div>
-        <div className="view">View 4</div>
+        <div className="view">
+            <EdfPlot selectedFile={selectedFile}/>
+        </div>
       </div>
     </div>
   );

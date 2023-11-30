@@ -11,7 +11,7 @@ type Tab = {
 const tempTabs: Tab[] = [
   { name: "Subject 1", element: <VisualizeData /> },
   { name: "Subject 2", element: <VisualizeData /> },
-  { name: "Subject 3", element: <div /> },
+  { name: "Subject 3", element: <VisualizeData /> },
 ];
 
 export function HomePage(): React.ReactElement {
