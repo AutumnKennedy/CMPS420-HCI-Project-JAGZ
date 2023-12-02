@@ -1,5 +1,5 @@
 import { routes } from "@/constants/routes";
-import { AppBar, Box, MenuItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, MenuItem, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../app.css";
@@ -32,6 +32,9 @@ export function Appbar(): React.ReactElement {
                 </Typography>
               </MenuItem>
             ))}
+          </Box>
+          <Box display="flex" flexDirection='row' justifyContent='flex-end'>
+          <Button variant="contained" color="success">ICA Prepocessing</Button>
           </Box>
         </Toolbar>
       </AppBar>
