@@ -1,3 +1,6 @@
+import subprocess
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
@@ -47,3 +50,14 @@ def get_file_list(request):
     folder_path = "media"
     files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
     return JsonResponse({'files': files})
+
+@csrf_exempt
+def run_ica_preprocessing(request):
+    try:
+        script_path = os.path.join(os.path.dirname(__file__), 'scripts', 'ica.py')
+
+        result = subprocess.run(['python', script_path], capture_output=True, text=True)
+
+        return JsonResponse({'output': result.stdout})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

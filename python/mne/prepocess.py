@@ -9,7 +9,9 @@ import mne
 # the scripts
 
 def prepocess(raw):
-    ica = mne.preprocessing.ICA(n_components=20, random_state=97, max_iter=800)
+    # set up and fit the ICA -- can be used for artifact repair
+    ica = mne.preprocessing.ICA(n_components=20, random_state=97, max_iter=800) 
     ica.exclude = [1, 2]
+    # plot the ICA
     ica.plot_properties(raw, picks=ica.exclude)
     ica.apply(raw)

@@ -2,15 +2,8 @@ import numpy as np
 import mne
 import sklearn
 
-# ############# #
-#   READ DATA   #
-# ############# #
-
-# read the data from folder location. if this folder does not exist
-# it is downloaded from mne
 sample_data_folder = mne.datasets.sample.data_path()
 
-# the actual file to be read
 sample_data_raw_file = (
     sample_data_folder / "MEG" / "sample" / "sample_audvis_filt-0-40_raw.fif"
 )
@@ -18,16 +11,6 @@ sample_data_raw_file = (
 # reads the raw data from the file
 raw = mne.io.read_raw_fif(sample_data_raw_file)
 
-# plot the data in interactive windows
-raw.compute_psd(fmax=50).plot(picks='data', exclude='bads')
-
-# how many channels to plot (n_channels). duration is how long the window should
-# be open, but block=True keeps it open until the window is manually closed
-raw.plot(duration=5, n_channels=30, block=True)
-
-# ############# #
-# PREPROCESSING #
-# ############# #
 
 # set up and fit the ICA -- im not sure what ICA is lol
 ica = mne.preprocessing.ICA(n_components=20, random_state=97, max_iter=800)
@@ -36,14 +19,9 @@ ica.exclude = [1, 2]
 # plot the ICA
 ica.plot_properties(raw, picks=ica.exclude)
 
-# more things i cannot explain
 orig_raw = raw.copy()
 raw.load_data()
 ica.apply(raw)
-
-# ########### # 
-# FRONTAL CHS #
-# ########### #
 
 # show some frontal channels to clearly illustrate the artifact removal
 chs = [
