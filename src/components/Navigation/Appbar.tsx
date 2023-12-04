@@ -21,7 +21,7 @@ export function Appbar(): React.ReactElement {
   const handleRunICAPreprocessing = async () => {
     try {
       // Make an API call to run the ICA preprocessing
-      const response = await axios.post('/api/run-ica-preprocessing');
+      const response = await axios.post('http://localhost:8000/api/run-ica-preprocessing/');
       console.log('ICA Preprocessing output:', response.data.output);
       // Handle the output as needed
     } catch (error) {
