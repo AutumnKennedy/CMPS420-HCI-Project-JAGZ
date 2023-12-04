@@ -1,8 +1,9 @@
 import { routes } from "@/constants/routes";
 import { AppBar, Box, Button, MenuItem, Toolbar, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../app.css";
+import axios from "axios";
 
 interface NavTab {
   icon: any;
@@ -14,6 +15,20 @@ const tabs: NavTab[] = [];
 
 export function Appbar(): React.ReactElement {
   const navigate = useNavigate();
+  const [file, setFile] = useState<File | undefined | null>(null);
+  const [select, setSelect] = useState<string | null>(null);
+
+  const handleRunICAPreprocessing = async () => {
+    try {
+      // Make an API call to run the ICA preprocessing
+      const response = await axios.post('/api/run-ica-preprocessing');
+      console.log('ICA Preprocessing output:', response.data.output);
+      // Handle the output as needed
+    } catch (error) {
+      console.error('Error running ICA Preprocessing:', error);
+      // Handle the error
+    }
+  };
 
   return (
     <React.Fragment>
@@ -34,7 +49,13 @@ export function Appbar(): React.ReactElement {
             ))}
           </Box>
           <Box display="flex" flexDirection='row' justifyContent='flex-end'>
-          <Button variant="contained" color="success">ICA Prepocessing</Button>
+          <Button 
+          variant="contained" 
+          color="success"
+          onClick={handleRunICAPreprocessing}
+          >
+            ICA Prepocessing
+          </Button>
           </Box>
         </Toolbar>
       </AppBar>
