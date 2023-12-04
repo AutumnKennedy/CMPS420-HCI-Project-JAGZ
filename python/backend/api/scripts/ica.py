@@ -18,13 +18,6 @@ sample_data_raw_file = (
 # reads the raw data from the file
 raw = mne.io.read_raw_fif(sample_data_raw_file)
 
-# plot the data in interactive windows
-raw.compute_psd(fmax=50).plot(picks='data', exclude='bads')
-
-# how many channels to plot (n_channels). duration is how long the window should
-# be open, but block=True keeps it open until the window is manually closed
-raw.plot(duration=5, n_channels=30, block=True)
-
 # ############# #
 # PREPROCESSING #
 # ############# #
