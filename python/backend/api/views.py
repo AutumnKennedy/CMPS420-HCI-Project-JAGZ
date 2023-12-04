@@ -54,14 +54,10 @@ def get_file_list(request):
 @csrf_exempt
 def run_ica_preprocessing(request):
     try:
-        # Set the path to your Python script
         script_path = os.path.join(os.path.dirname(__file__), 'scripts', 'ica.py')
 
-        # Execute the Python script using subprocess
         result = subprocess.run(['python', script_path], capture_output=True, text=True)
 
-        # Return the output in the JSON response
         return JsonResponse({'output': result.stdout})
     except Exception as e:
-        # Handle exceptions
         return JsonResponse({'error': str(e)}, status=500)
